@@ -65,26 +65,16 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="PropertySheet_x64_v1.props" />
-    <Import Project="..\Debug_g2o_x64_v1.props" />
-    <Import Project="..\Debug_opencv_x64_v1.props" />
-    <Import Project="..\Debug_pcl_x64_v1.props" />
-    <Import Project="..\Debug_suitesparse_x64_v1.props" />
-    <Import Project="..\Debug_yaml_cpp_v1.props" />
-    <Import Project="..\Eigen_x64_v1.props" />
     <Import Project="..\intel.realsense.props" />
-    <Import Project="..\Sophus_v1.props" />
+    <Import Project="..\Debug_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
+    <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="PropertySheet_x64_v1.props" />
-    <Import Project="..\Release_g2o_x64_v1.props" />
-    <Import Project="..\Release_opencv_x64_v1.props" />
-    <Import Project="..\Release_pcl_x64_v1.props" />
-    <Import Project="..\Release_suitesparse__x64_v1.props" />
-    <Import Project="..\Release_yaml_cpp_v1.props" />
-    <Import Project="..\Eigen_x64_v1.props" />
     <Import Project="..\intel.realsense.props" />
-    <Import Project="..\Sophus_v1.props" />
+    <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
+    <Import Project="..\Release_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
