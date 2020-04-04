@@ -53,12 +53,12 @@ int main(int argc, char** argv)
         getchar();
         return 0;
     }
-    int width = 640;    // 设置图像分辨率和帧率
-    int height = 480;
-    int fps = 15;
+    int frame_width = myslam::Config::get<int>("frame_width");    // 设置图像分辨率和帧率
+    int frame_height = myslam::Config::get<int>("frame_height");
+    int frame_fps = myslam::Config::get<int>("frame_fps");
     rs2::config cfg;    
-    cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16, fps);    //  设置深度图和RGB图像流的格式
-    cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);
+    cfg.enable_stream(RS2_STREAM_DEPTH, frame_width, frame_height, RS2_FORMAT_Z16, frame_fps);    //  设置深度图和RGB图像流的格式
+    cfg.enable_stream(RS2_STREAM_COLOR, frame_width, frame_height, RS2_FORMAT_BGR8, frame_fps);
     rs2::pipeline pipe;
     auto profile = pipe.start(cfg);
     // 获取彩色和深度图像流配置对象
@@ -72,6 +72,27 @@ int main(int argc, char** argv)
     float depth_scale = depth_sensor.get_depth_scale();
     // 设置自定义相机类的参数，由于相机类的depth_scale是作为除数运算的，所以这里要求个倒数
     myslam::Camera::Ptr camera(new myslam::Camera(i.fx, i.fy, i.ppx, i.ppy, 1.0/depth_scale));
+
+    // 如果当前的深度传感器支持调节红外光发射器，就把发射器打开或关闭
+    if (depth_sensor.supports(RS2_OPTION_EMITTER_ENABLED))
+    {
+        // 设定值为1，打开发射器；为0，关闭发射器
+        depth_sensor.set_option(RS2_OPTION_EMITTER_ENABLED, myslam::Config::get<float>("emitter_enabled")); 
+    }
+    // 如果当前的深度传感器支持调节激光器功率，就可以调节
+    if (depth_sensor.supports(RS2_OPTION_LASER_POWER))
+    {
+        // Query min and max values:
+        auto range = depth_sensor.get_option_range(RS2_OPTION_LASER_POWER); // 获取激光器功率的允许调节范围
+        depth_sensor.set_option(RS2_OPTION_LASER_POWER, range.min + (range.max - range.min) * myslam::Config::get<float>("laser_power_ratio"));
+    }
+    // 如果当前的深度传感器支持调节曝光时间，而且自动调节曝光参数功能被关闭，方可手动设定曝光时间
+    if ((depth_sensor.supports(RS2_OPTION_EXPOSURE))&&(myslam::Config::get<float>("auto_exposure_mode")==0))
+    {
+        // 按照比例设置曝光时间，设定任何值都会停止自动调节曝光时间功能
+        auto range = depth_sensor.get_option_range(RS2_OPTION_EXPOSURE);
+        depth_sensor.set_option(RS2_OPTION_EXPOSURE, range.min + (range.max - range.min)*myslam::Config::get<float>("exposure_ratio")); 
+    }
 
     const auto window_name = "Display Image";
 
@@ -89,14 +110,11 @@ int main(int argc, char** argv)
         rs2::frame rs_depthFrame = frameset.get_depth_frame();
         rs2::frame rs_colorFrame = frameset.get_color_frame();
 
-        const int w_depth = rs_depthFrame.as<rs2::video_frame>().get_width();
-        const int h_depth = rs_depthFrame.as<rs2::video_frame>().get_height();
+        //const int w_depth = rs_depthFrame.as<rs2::video_frame>().get_width();
+        //const int h_depth = rs_depthFrame.as<rs2::video_frame>().get_height();
 
-        const int w_color = rs_colorFrame.as<rs2::video_frame>().get_width();
-        const int h_color = rs_colorFrame.as<rs2::video_frame>().get_height();
-
-        Mat depth(Size(w_depth, h_depth), CV_16UC1, (void*)rs_depthFrame.get_data(), Mat::AUTO_STEP);
-        Mat color(Size(w_color, h_color), CV_8UC3, (void*)rs_colorFrame.get_data(), Mat::AUTO_STEP);
+        Mat depth(Size(frame_width, frame_height), CV_16UC1, (void*)rs_depthFrame.get_data(), Mat::AUTO_STEP);
+        Mat color(Size(frame_width, frame_height), CV_8UC3, (void*)rs_colorFrame.get_data(), Mat::AUTO_STEP);
         if (color.data == nullptr || depth.data == nullptr)
             break;
 
@@ -110,7 +128,7 @@ int main(int argc, char** argv)
         //cv::moveWindow("color", 640, 520);
 
         // 由于相机刚刚打开的时候，最初的几帧图像有问题，所以前10帧先不要
-        if (num < 10)
+        if (num < 5)
         {
             num++;
             continue;
@@ -125,16 +143,16 @@ int main(int argc, char** argv)
         // 做一次检验，如果vo处于跟丢的状态，就退出循环
         if (vo->state_ == myslam::VisualOdometry::LOST)
             break;
+
+        // show the map and the camera pose 
+        // 需要使用cv::Affine3类来进行viz模块坐标系位置的更新，cv::Affine3对象的核心其实就是一个4*4的位姿变换矩阵，根据其定义，
+        // 可以使用旋转矩阵R和平移向量t作为参数来声明这个对象，只不过它需要的矩阵和向量如下：
+        // 首先获取Twc
         // 如果vo还没有跟丢，那就获取当前相机在世界坐标系中的位姿，在addFrame()的时候，会更新当前帧的Tcw矩阵，Tcw矩阵代表了
         // 从世界坐标系到相机坐标系的位姿变换矩阵，他由旋转矩阵和平移向量组成，其中旋转矩阵代表了世界坐标系在相机坐标系下的姿态，
         // 而平移向量则代表了世界坐标系的原点在相机坐标系中的坐标。
         // 因此，对Tcw求逆矩阵，就可以得到相机坐标系在世界坐标系下的位姿。
         SE3d Twc = pFrame->T_c_w_.inverse();
-
-        // show the map and the camera pose 
-        // 需要使用cv::Affine3类来进行viz模块坐标系位置的更新，cv::Affine3对象的核心其实就是一个4*4的位姿变换矩阵，根据其定义，
-        // 可以使用旋转矩阵R和平移向量t作为参数来声明这个对象，只不过它需要的矩阵和向量如下：
-        // 由于SE3d
         cv::Affine3d M(
             cv::Affine3d::Mat3(
                 Twc.rotationMatrix()(0, 0), Twc.rotationMatrix()(0, 1), Twc.rotationMatrix()(0, 2),
@@ -145,22 +163,22 @@ int main(int argc, char** argv)
                 Twc.translation()(0, 0), Twc.translation()(1, 0), Twc.translation()(2, 0)
                 )
             );
+        vis.setWidgetPose("Camera", M);
+        vis.spinOnce(1, false);
 
         // 将特征点咋彩色图像上标记出来
-        Mat img_show = color.clone();
+        Mat img_show = pFrame->color_.clone();
         for (auto& pt : vo->map_->map_points_)
         {
             myslam::MapPoint::Ptr p = pt.second;
             Vector2d pixel = pFrame->camera_->world2pixel(p->pos_, pFrame->T_c_w_);
             cv::circle(img_show, cv::Point2f(pixel(0, 0), pixel(1, 0)), 5, cv::Scalar(0, 255, 0), 2);
         }
-
         cv::imshow(window_name, img_show);   // 显示带有特征点标记的图像
         cv::namedWindow(window_name, WINDOW_AUTOSIZE);
         cv::moveWindow(window_name, 0, 520);
         cv::waitKey(1); 
-        vis.setWidgetPose("Camera", M);
-        vis.spinOnce(1, false);
+        
     }
 
     return 0;
