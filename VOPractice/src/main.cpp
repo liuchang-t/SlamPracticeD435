@@ -56,7 +56,8 @@ int main(int argc, char** argv)
     int frame_width = myslam::Config::get<int>("frame_width");    // 设置图像分辨率和帧率
     int frame_height = myslam::Config::get<int>("frame_height");
     int frame_fps = myslam::Config::get<int>("frame_fps");
-    rs2::config cfg;    
+    rs2::config cfg;   
+    cfg.enable_stream(RS2_STREAM_INFRARED, 1, frame_width, frame_height, RS2_FORMAT_Y8, frame_fps);
     cfg.enable_stream(RS2_STREAM_DEPTH, frame_width, frame_height, RS2_FORMAT_Z16, frame_fps);    //  设置深度图和RGB图像流的格式
     cfg.enable_stream(RS2_STREAM_COLOR, frame_width, frame_height, RS2_FORMAT_BGR8, frame_fps);
     rs2::pipeline pipe;
@@ -98,9 +99,33 @@ int main(int argc, char** argv)
 
     myslam::VisualOdometry::Ptr vo(new myslam::VisualOdometry);
     int num = 0;
+    //bool emitter_status = true;
+    //int frame_number = 0;
     //while (waitKey(1) < 0 && getWindowProperty(window_name, WND_PROP_AUTOSIZE) >= 0)
     while (waitKey(1) < 0)
     {
+        //if (emitter_status)
+        //{
+        //    if (frame_number == 0)
+        //        depth_sensor.set_option(RS2_OPTION_EMITTER_ENABLED, 1);
+        //    frame_number++;
+        //    if (frame_number == frame_fps)
+        //    {
+        //        emitter_status = false;
+        //        frame_number = 0;
+        //    }  
+        //}
+        //else
+        //{
+        //    if (frame_number == 0)
+        //        depth_sensor.set_option(RS2_OPTION_EMITTER_ENABLED, 0);
+        //    frame_number++;
+        //    if (frame_number == frame_fps)
+        //    {
+        //        emitter_status = true;
+        //        frame_number = 0;
+        //    }
+        //}
         rs2::frameset frameset = pipe.wait_for_frames(); // Wait for next set of frames from the camera
 
         // 设置深度图到RGB图的剪裁，因为深度图比RGB图视野大，由于手动设置了图像尺寸，这里就不需要了
@@ -109,10 +134,10 @@ int main(int argc, char** argv)
 
         rs2::frame rs_depthFrame = frameset.get_depth_frame();
         rs2::frame rs_colorFrame = frameset.get_color_frame();
-
-        //const int w_depth = rs_depthFrame.as<rs2::video_frame>().get_width();
-        //const int h_depth = rs_depthFrame.as<rs2::video_frame>().get_height();
-
+        //rs2::frame ir_frame_left = frameset.get_infrared_frame(1);
+        //Mat infrared(Size(frame_width, frame_height), CV_8UC1, (void*)ir_frame_left.get_data(), Mat::AUTO_STEP);
+        //cv::imshow("infrared", infrared);
+        //cv::moveWindow("infrared", 640, 520);
         Mat depth(Size(frame_width, frame_height), CV_16UC1, (void*)rs_depthFrame.get_data(), Mat::AUTO_STEP);
         Mat color(Size(frame_width, frame_height), CV_8UC3, (void*)rs_colorFrame.get_data(), Mat::AUTO_STEP);
         if (color.data == nullptr || depth.data == nullptr)
