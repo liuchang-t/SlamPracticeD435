@@ -67,15 +67,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Debug_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
     <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
-    <Import Project="..\..\属性表备份\Debug_Pangolin.props" />
-    <Import Project="..\..\属性表备份\Debug_DBoW2.props" />
+    <Import Project="..\Debug_DBoW2.props" />
+    <Import Project="..\Debug_Pangolin.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\Release_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
     <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
-    <Import Project="..\..\属性表备份\Release_Pangolin.props" />
-    <Import Project="..\..\属性表备份\Release_DBoW2.props" />
+    <Import Project="..\Release_DBoW2.props" />
+    <Import Project="..\Release_Pangolin.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
