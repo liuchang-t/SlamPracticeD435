@@ -20,9 +20,11 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{F89E5234-AEF9-455E-A063-5F9C1E94C4F1}</ProjectGuid>
-    <RootNamespace>VOPractice</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{0858b7a5-d7cc-4b93-9d4f-37e1b73cad3f}</ProjectGuid>
+    <RootNamespace>ORBSLAM</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ORB_SLAM</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,13 +41,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -58,37 +60,53 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\General_DBoW2.props" />
+    <Import Project="..\General_Pangolin.props" />
+    <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
+    <Import Project="..\intel.realsense.props" />
+    <Import Project="PropertySheet_x64_v1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\General_DBoW2.props" />
+    <Import Project="..\General_Pangolin.props" />
+    <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
+    <Import Project="..\intel.realsense.props" />
+    <Import Project="PropertySheet_x64_v1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="PropertySheet_x64_v1.props" />
-    <Import Project="..\intel.realsense.props" />
-    <Import Project="..\Debug_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
     <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
-    <Import Project="..\General_DBoW2.props" />
-    <Import Project="..\General_Pangolin.props" />
+    <Import Project="..\intel.realsense.props" />
+    <Import Project="PropertySheet_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Debug_DBoW2.props" />
+    <Import Project="..\..\属性表备份\Debug_Pangolin.props" />
+    <Import Project="..\..\属性表备份\Debug_g2o_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Debug_opencv_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Debug_pcl_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Debug_suitesparse_x64_v1.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="PropertySheet_x64_v1.props" />
-    <Import Project="..\intel.realsense.props" />
     <Import Project="..\General_Sophus_Eigen_x64_v1.props" />
-    <Import Project="..\Release_g2o_opencv_pcl_suitesparse_yaml_x64_v1.props" />
-    <Import Project="..\General_DBoW2.props" />
-    <Import Project="..\General_Pangolin.props" />
+    <Import Project="..\intel.realsense.props" />
+    <Import Project="PropertySheet_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Release_DBoW2.props" />
+    <Import Project="..\..\属性表备份\Release_Pangolin.props" />
+    <Import Project="..\..\属性表备份\Release_g2o_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Release_opencv_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Release_pcl_x64_v1.props" />
+    <Import Project="..\..\属性表备份\Release_suitesparse__x64_v1.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -97,19 +115,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -123,7 +129,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -131,15 +137,29 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>OpenGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -150,24 +170,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\config.cpp" />
-    <ClCompile Include="src\frame.cpp" />
-    <ClCompile Include="src\g2o_types.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\map.cpp" />
-    <ClCompile Include="src\mappoint.cpp" />
-    <ClCompile Include="src\visual_odometry.cpp" />
+    <ClCompile Include="src\Converter.cc" />
+    <ClCompile Include="src\Frame.cc" />
+    <ClCompile Include="src\FrameDrawer.cc" />
+    <ClCompile Include="src\Initializer.cc" />
+    <ClCompile Include="src\KeyFrame.cc" />
+    <ClCompile Include="src\KeyFrameDatabase.cc" />
+    <ClCompile Include="src\LocalMapping.cc" />
+    <ClCompile Include="src\LoopClosing.cc" />
+    <ClCompile Include="src\Map.cc" />
+    <ClCompile Include="src\MapDrawer.cc" />
+    <ClCompile Include="src\MapPoint.cc" />
+    <ClCompile Include="src\Optimizer.cc" />
+    <ClCompile Include="src\ORBextractor.cc" />
+    <ClCompile Include="src\ORBmatcher.cc" />
+    <ClCompile Include="src\PnPsolver.cc" />
+    <ClCompile Include="src\Sim3Solver.cc" />
+    <ClCompile Include="src\System.cc" />
+    <ClCompile Include="src\Tracking.cc" />
+    <ClCompile Include="src\Viewer.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\myslam\camera.h" />
-    <ClInclude Include="include\myslam\common_include.h" />
-    <ClInclude Include="include\myslam\config.h" />
-    <ClInclude Include="include\myslam\frame.h" />
-    <ClInclude Include="include\myslam\g2o_types.h" />
-    <ClInclude Include="include\myslam\map.h" />
-    <ClInclude Include="include\myslam\mappoint.h" />
-    <ClInclude Include="include\myslam\visual_odometry.h" />
+    <ClInclude Include="include\Converter.h" />
+    <ClInclude Include="include\Frame.h" />
+    <ClInclude Include="include\FrameDrawer.h" />
+    <ClInclude Include="include\Initializer.h" />
+    <ClInclude Include="include\KeyFrame.h" />
+    <ClInclude Include="include\KeyFrameDatabase.h" />
+    <ClInclude Include="include\LocalMapping.h" />
+    <ClInclude Include="include\LoopClosing.h" />
+    <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\MapDrawer.h" />
+    <ClInclude Include="include\MapPoint.h" />
+    <ClInclude Include="include\Optimizer.h" />
+    <ClInclude Include="include\ORBextractor.h" />
+    <ClInclude Include="include\ORBmatcher.h" />
+    <ClInclude Include="include\ORBVocabulary.h" />
+    <ClInclude Include="include\PnPsolver.h" />
+    <ClInclude Include="include\Sim3Solver.h" />
+    <ClInclude Include="include\System.h" />
+    <ClInclude Include="include\Tracking.h" />
+    <ClInclude Include="include\Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

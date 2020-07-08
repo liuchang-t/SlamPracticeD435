@@ -1,0 +1,1 @@
+./x64/Release/rgbd-tum1.exe Vocabulary/ORBvoc.txt rgbd-tum1/TUM1.yaml ../dataset/rgbd_dataset_freiburg1_xyz/ ../dataset/rgbd_dataset_freiburg1_xyz/associate.txt

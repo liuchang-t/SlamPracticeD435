@@ -5,6 +5,13 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VOPractice", "VOPractice\VOPractice.vcxproj", "{F89E5234-AEF9-455E-A063-5F9C1E94C4F1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ORB_SLAM", "ORB-SLAM\ORB-SLAM.vcxproj", "{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rgbd-tum1", "rgbd-tum1\rgbd-tum1.vcxproj", "{D2C8F518-E657-40A8-8126-D1DA40239E98}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F} = {0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +28,22 @@ Global
 		{F89E5234-AEF9-455E-A063-5F9C1E94C4F1}.Release|x64.Build.0 = Release|x64
 		{F89E5234-AEF9-455E-A063-5F9C1E94C4F1}.Release|x86.ActiveCfg = Release|Win32
 		{F89E5234-AEF9-455E-A063-5F9C1E94C4F1}.Release|x86.Build.0 = Release|Win32
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Debug|x64.ActiveCfg = Debug|x64
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Debug|x64.Build.0 = Debug|x64
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Debug|x86.ActiveCfg = Debug|Win32
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Debug|x86.Build.0 = Debug|Win32
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Release|x64.ActiveCfg = Release|x64
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Release|x64.Build.0 = Release|x64
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Release|x86.ActiveCfg = Release|Win32
+		{0858B7A5-D7CC-4B93-9D4F-37E1B73CAD3F}.Release|x86.Build.0 = Release|Win32
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Debug|x64.ActiveCfg = Debug|x64
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Debug|x64.Build.0 = Debug|x64
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Debug|x86.ActiveCfg = Debug|Win32
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Debug|x86.Build.0 = Debug|Win32
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Release|x64.ActiveCfg = Release|x64
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Release|x64.Build.0 = Release|x64
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Release|x86.ActiveCfg = Release|Win32
+		{D2C8F518-E657-40A8-8126-D1DA40239E98}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
